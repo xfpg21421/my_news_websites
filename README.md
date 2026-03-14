@@ -25,6 +25,7 @@ A clean, modern news aggregation website that provides real-time headlines from 
 - 🚀 **Frontend Only** - No backend server required
 - 🎨 **Modern UI** - Clean and beautiful interface
 - ⚙️ **Easy Configuration** - Customize update frequency and behavior
+- 💰 **Monetization Ready** - Pre-configured Google AdSense integration
 
 ## Tech Stack
 
@@ -116,17 +117,43 @@ This is a static website and can be deployed to any static hosting platform:
 - **AWS S3**: Upload to S3 bucket with static hosting enabled
 - **Azure Static Web Apps**: Connect GitHub repository
 
+## 💰 Monetization with Google AdSense
+
+This website is pre-configured for Google AdSense monetization with 4 strategic ad placements:
+
+1. **Top Banner** - High visibility horizontal ad
+2. **In-feed (Top)** - Native ad before content
+3. **In-feed (Bottom)** - Native ad after content
+4. **Sidebar** - Fixed sidebar ad (desktop only)
+
+### Quick Setup:
+
+1. Apply for [Google AdSense](https://www.google.com/adsense)
+2. Get approved (typically 1-2 weeks)
+3. Replace placeholder IDs in `index.html`:
+   - `ca-pub-XXXXXXXXXXXXXXXXX` → Your Publisher ID
+   - `data-ad-slot="YYYYYYYYYY"` → Your Ad Unit IDs
+4. Deploy and start earning!
+
+**📖 Detailed Guide**: See [ADSENSE_SETUP.md](ADSENSE_SETUP.md) for complete instructions.
+
+**Expected Revenue** (with 1,000 daily visitors):
+- UK traffic has high CPM (£0.20-£1.50 per click)
+- Estimated: £200-£500/month
+
 ## Project Structure
 
 ```
 my_news_websites/
-├── index.html          # Main page
+├── index.html           # Main page (AdSense integrated)
 ├── css/
-│   └── style.css       # Stylesheet
+│   └── style.css        # Stylesheet (with ad styles)
 ├── js/
-│   ├── config.js       # Configuration settings
-│   └── app.js          # Core application logic
-└── README.md           # Documentation
+│   ├── config.js        # Configuration settings
+│   └── app.js           # Core application logic
+├── favicon.svg          # British-themed icon
+├── README.md            # Documentation
+└── ADSENSE_SETUP.md     # AdSense monetization guide
 ```
 
 ## Browser Support

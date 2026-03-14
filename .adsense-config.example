@@ -1,0 +1,75 @@
+# Google AdSense Configuration
+#
+# After getting approved by Google AdSense, update these values in index.html
+
+# =============================================================================
+# STEP 1: Replace Your Publisher ID
+# =============================================================================
+# Find in index.html (appears 5 times):
+#   ca-pub-XXXXXXXXXXXXXXXXX
+#
+# Replace with your actual Publisher ID from AdSense dashboard
+# Example: ca-pub-1234567890123456
+#
+YOUR_PUBLISHER_ID=ca-pub-XXXXXXXXXXXXXXXXX
+
+
+# =============================================================================
+# STEP 2: Replace Ad Slot IDs
+# =============================================================================
+# After creating ad units in AdSense, replace these slot IDs:
+
+# Ad Slot 1: Top Banner (Horizontal Display Ad)
+TOP_BANNER_SLOT=YYYYYYYYYY
+
+# Ad Slot 2: In-feed Top (Native Ad before content)
+INFEED_TOP_SLOT=YYYYYYYYYY
+
+# Ad Slot 3: In-feed Bottom (Native Ad after content)
+INFEED_BOTTOM_SLOT=YYYYYYYYYY
+
+# Ad Slot 4: Sidebar (Vertical Display Ad - Desktop only)
+SIDEBAR_SLOT=YYYYYYYYYY
+
+
+# =============================================================================
+# HOW TO FIND THESE VALUES
+# =============================================================================
+# 1. Login to https://www.google.com/adsense
+# 2. Publisher ID: Account → Account Information
+# 3. Ad Slot IDs: Ads → By ad unit → Create ad units
+#
+# For detailed instructions, see ADSENSE_SETUP.md
+
+
+# =============================================================================
+# SEARCH & REPLACE GUIDE
+# =============================================================================
+# Use your code editor's Find & Replace feature:
+#
+# Find:    ca-pub-XXXXXXXXXXXXXXXXX
+# Replace: ca-pub-YOUR_ACTUAL_ID
+#
+# Then replace each YYYYYYYYYY with the corresponding slot ID
+
+
+# =============================================================================
+# VERIFICATION
+# =============================================================================
+# After updating:
+# 1. Save index.html
+# 2. Deploy your website
+# 3. Check AdSense dashboard (may take 24-48 hours to show data)
+# 4. Use browser DevTools to verify ads are loading
+#
+# Tip: Open Console (F12) and look for AdSense errors
+
+
+# =============================================================================
+# IMPORTANT NOTES
+# =============================================================================
+# - Keep your Publisher ID confidential (don't commit to public repos)
+# - Don't click your own ads (violates AdSense policy)
+# - Allow 24-48 hours for ads to start showing
+# - Ensure your site is publicly accessible
+# - Check that ads.txt file is configured (if required)

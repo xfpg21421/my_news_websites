@@ -26,6 +26,10 @@
 
     <link rel="stylesheet" href="css/style.css">
     <script src="js/config.js"></script>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -34,6 +38,16 @@
             <p class="subtitle">Latest headlines from Britain's leading news sources</p>
         </div>
     </header>
+
+    <!-- Ad Slot 1: Horizontal Banner (Top) -->
+    <div class="ad-container ad-horizontal">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
 
     <nav class="filter-nav">
         <div class="container">
@@ -62,7 +76,27 @@
             <p>Failed to load news. Please try again later.</p>
         </div>
 
+        <!-- Ad Slot 2: In-feed Ad (Before content) -->
+        <div class="ad-container ad-infeed">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="fluid"
+                 data-ad-layout-key="-6t+ed+2i-1n-4w"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+                 data-ad-slot="YYYYYYYYYY"></ins>
+        </div>
+
         <div id="news-grid" class="news-grid"></div>
+
+        <!-- Ad Slot 3: In-feed Ad (After content) -->
+        <div class="ad-container ad-infeed">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-format="fluid"
+                 data-ad-layout-key="-6t+ed+2i-1n-4w"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+                 data-ad-slot="YYYYYYYYYY"></ins>
+        </div>
     </main>
 
     <footer>
@@ -71,6 +105,24 @@
         </div>
     </footer>
 
+    <!-- Ad Slot 4: Sticky Sidebar Ad (Desktop only) -->
+    <div class="ad-sidebar">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+             data-ad-slot="YYYYYYYYYY"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+
     <script src="js/app.js"></script>
+
+    <!-- Initialize AdSense ads -->
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 </body>
 </html>
