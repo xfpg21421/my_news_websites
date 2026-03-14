@@ -32,11 +32,13 @@ const RSS_PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 let allNews = [];
 let currentFilter = 'all';
+let availableSources = new Set(); // Track which sources have news
 
 // Initialize application
 async function initApp() {
     showLoading(true);
     await fetchAllNews();
+    updateFilterButtons();
     displayNews();
     setupEventListeners();
     updateLastUpdateTime();
@@ -55,6 +57,15 @@ async function fetchAllNews() {
         .filter(result => result.status === 'fulfilled')
         .flatMap(result => result.value)
         .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+    // Track which sources have news
+    availableSources.clear();
+    allNews.forEach(news => availableSources.add(news.source));
+
+    if (CONFIG?.DEBUG_MODE) {
+        console.log('Available sources:', Array.from(availableSources));
+        console.log('Total news items:', allNews.length);
+    }
 }
 
 // Fetch single RSS source
@@ -122,7 +133,20 @@ function displayNews() {
         : allNews.filter(news => news.source === currentFilter);
 
     if (filteredNews.length === 0) {
-        newsGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: var(--text-secondary);">No news available</p>';
+        const sourceName = currentFilter === 'all'
+            ? 'any source'
+            : NEWS_SOURCES[currentFilter]?.name || currentFilter;
+
+        newsGrid.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📰</div>
+                <h3 class="empty-state-title">No News Available</h3>
+                <p class="empty-state-message">
+                    There are currently no news items from ${sourceName}.<br>
+                    Please try refreshing or check back later.
+                </p>
+            </div>
+        `;
         return;
     }
 
@@ -185,6 +209,36 @@ function getTimeAgo(date) {
     return date.toLocaleDateString(locale);
 }
 
+// Update filter buttons based on available sources
+function updateFilterButtons() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    filterButtons.forEach(btn => {
+        const source = btn.dataset.source;
+
+        // Always show "All" button
+        if (source === 'all') {
+            btn.style.display = '';
+            return;
+        }
+
+        // Hide buttons for sources with no news
+        if (!availableSources.has(source)) {
+            btn.style.display = 'none';
+            btn.classList.add('no-news');
+
+            // If current filter is this source, switch to "all"
+            if (currentFilter === source) {
+                currentFilter = 'all';
+                document.querySelector('[data-source="all"]').classList.add('active');
+            }
+        } else {
+            btn.style.display = '';
+            btn.classList.remove('no-news');
+        }
+    });
+}
+
 // Setup event listeners
 function setupEventListeners() {
     const filterButtons = document.querySelectorAll('.filter-btn');
@@ -205,6 +259,7 @@ function setupEventListeners() {
         refreshBtn.disabled = true;
 
         await fetchAllNews();
+        updateFilterButtons();
         displayNews();
         updateLastUpdateTime();
 
@@ -255,6 +310,7 @@ if (refreshInterval > 0) {
             console.log('Auto-refreshing news...');
         }
         await fetchAllNews();
+        updateFilterButtons();
         displayNews();
         updateLastUpdateTime();
     }, refreshInterval * 60 * 1000);
