@@ -1,117 +1,163 @@
-# 英国主流媒体新闻聚合网站
+# UK News Aggregator
 
-一个简洁、现代化的新闻聚合网站，实时聚合英国主流媒体的头版新闻。
+A clean, modern news aggregation website that provides real-time headlines from the UK's leading news sources.
 
-## 特性
+## Features
 
-- 📰 聚合英国5大主流媒体新闻源
+- 📰 **5 Major UK News Sources**
   - BBC News
-  - The Guardian (卫报)
-  - The Telegraph (电讯报)
-  - The Independent (独立报)
+  - The Guardian
+  - The Telegraph
+  - The Independent
   - Sky News
 
-- ⚡ 实时更新 - 每5分钟自动刷新
-- 🎯 智能筛选 - 可按媒体来源过滤
-- 📱 响应式设计 - 完美适配手机、平板和桌面
-- 🚀 纯前端 - 无需后端服务器
-- 🎨 现代化UI - 简洁美观的界面设计
+- ⚡ **Automatic Updates**
+  - Auto-refresh every 5 minutes (configurable)
+  - Manual refresh button with visual feedback
+  - Real-time "last updated" timestamp
 
-## 技术栈
+- 🎯 **Smart Filtering** - Filter news by source
+- 📱 **Responsive Design** - Perfect on mobile, tablet and desktop
+- 🚀 **Frontend Only** - No backend server required
+- 🎨 **Modern UI** - Clean and beautiful interface
+- ⚙️ **Easy Configuration** - Customize update frequency and behavior
+
+## Tech Stack
 
 - HTML5
-- CSS3 (Grid布局、Flexbox、动画)
-- 原生JavaScript (ES6+)
-- RSS2JSON API (用于解决跨域问题)
+- CSS3 (Grid layout, Flexbox, animations)
+- Vanilla JavaScript (ES6+)
+- RSS2JSON API (for CORS handling)
 
-## 快速开始
+## Quick Start
 
-### 方法1: 直接打开
+### Method 1: Direct Open
 
-直接用浏览器打开 `index.html` 文件即可使用。
+Simply open `index.html` in your browser.
 
-### 方法2: 本地服务器
+### Method 2: Local Server
 
-使用任意HTTP服务器运行：
+Use any HTTP server:
 
 ```bash
-# 使用Python 3
+# Using Python 3
 python -m http.server 8000
 
-# 或使用Python 2
+# Or Python 2
 python -m SimpleHTTPServer 8000
 
-# 或使用Node.js的http-server
+# Or Node.js http-server
 npx http-server
 ```
 
-然后访问 `http://localhost:8000`
+Then visit `http://localhost:8000`
 
-## 部署
+## How News Updates Work
 
-### 部署到GitHub Pages
+### 🔄 Automatic Updates
 
-1. 将代码推送到GitHub仓库
-2. 进入仓库的Settings > Pages
-3. 在Source中选择main分支
-4. 保存后等待几分钟即可通过提供的URL访问
+The website automatically refreshes news **every 5 minutes** by default. News is fetched live from RSS feeds, ensuring you always see the latest stories.
 
-### 部署到其他平台
+### 🖱️ Manual Refresh
 
-本项目为纯静态网站，可部署到任何静态网站托管平台：
+Click the green **"Refresh"** button in the navigation bar to manually update news at any time. The refresh icon will spin during the update.
 
-- Vercel
-- Netlify
-- Cloudflare Pages
-- GitLab Pages
-- 阿里云OSS
-- 腾讯云COS
+### ⚙️ Customizing Update Frequency
 
-## 项目结构
+Edit `js/config.js` to customize the update behavior:
+
+```javascript
+const CONFIG = {
+    // Change auto-refresh interval (in minutes)
+    AUTO_REFRESH_INTERVAL: 5,  // Default: 5 minutes
+
+    // Set to 0 to disable auto-refresh
+    // AUTO_REFRESH_INTERVAL: 0,
+
+    // Change maximum articles per source
+    MAX_ARTICLES_PER_SOURCE: 10,  // Default: 10
+
+    // Change description preview length
+    DESCRIPTION_LENGTH: 150,  // Default: 150 characters
+
+    // Enable debug logging
+    DEBUG_MODE: false  // Set to true for console logs
+};
+```
+
+**Common configurations:**
+
+- **More frequent updates**: `AUTO_REFRESH_INTERVAL: 1` (every minute)
+- **Less frequent updates**: `AUTO_REFRESH_INTERVAL: 15` (every 15 minutes)
+- **Manual only**: `AUTO_REFRESH_INTERVAL: 0` (disable auto-refresh)
+- **More articles**: `MAX_ARTICLES_PER_SOURCE: 20` (20 articles per source)
+
+## Deployment
+
+### Deploy to GitHub Pages
+
+1. Push code to GitHub repository
+2. Go to repository Settings > Pages
+3. Select main branch as Source
+4. Save and wait a few minutes to access via the provided URL
+
+### Deploy to Other Platforms
+
+This is a static website and can be deployed to any static hosting platform:
+
+- **Vercel**: `vercel --prod`
+- **Netlify**: Drag and drop project folder to netlify.com
+- **Cloudflare Pages**: Connect Git repository for automatic deployment
+- **GitLab Pages**: Enable in repository settings
+- **AWS S3**: Upload to S3 bucket with static hosting enabled
+- **Azure Static Web Apps**: Connect GitHub repository
+
+## Project Structure
 
 ```
 my_news_websites/
-├── index.html          # 主页面
+├── index.html          # Main page
 ├── css/
-│   └── style.css       # 样式文件
+│   └── style.css       # Stylesheet
 ├── js/
-│   └── app.js          # 核心逻辑
-└── README.md           # 项目说明
+│   ├── config.js       # Configuration settings
+│   └── app.js          # Core application logic
+└── README.md           # Documentation
 ```
 
-## 浏览器支持
+## Browser Support
 
-- Chrome (推荐)
+- Chrome (recommended)
 - Firefox
 - Safari
 - Edge
-- 其他现代浏览器
+- Other modern browsers
 
-## 注意事项
+## Important Notes
 
-1. 本项目使用RSS2JSON API服务来解决RSS跨域问题
-2. 免费版API有请求限制，如需大量使用建议注册API密钥
-3. 新闻内容版权归各媒体所有
-4. 仅用于学习和个人使用
+1. This project uses the RSS2JSON API service to handle RSS CORS issues
+2. The free API tier has rate limits; register for an API key for heavy usage
+3. News content copyright belongs to respective media outlets
+4. For educational and personal use only
 
-## 自定义
+## Customization
 
-### 添加新的新闻源
+### Add a New News Source
 
-在 `js/app.js` 中的 `NEWS_SOURCES` 对象添加新源：
+Add a new source to the `NEWS_SOURCES` object in `js/app.js`:
 
 ```javascript
 const NEWS_SOURCES = {
-    // 现有源...
+    // Existing sources...
     newSource: {
-        name: '新闻源名称',
-        rss: 'RSS地址',
+        name: 'Source Name',
+        rss: 'https://example.com/rss',
         class: 'newSource'
     }
 };
 ```
 
-同时在 `css/style.css` 中添加对应的样式：
+Also add corresponding styles in `css/style.css`:
 
 ```css
 .news-source.newSource {
@@ -120,21 +166,59 @@ const NEWS_SOURCES = {
 }
 ```
 
-### 修改刷新间隔
+### Change Color Theme
 
-在 `js/app.js` 底部修改：
+Edit CSS variables in `css/style.css`:
 
-```javascript
-// 将5分钟改为其他时间（单位：毫秒）
-setInterval(async () => {
-    // ...
-}, 5 * 60 * 1000);  // 5分钟
+```css
+:root {
+    --primary-color: #1a73e8;
+    --secondary-color: #34a853;
+    /* Modify other colors... */
+}
 ```
 
-## 许可证
+### Enable Debug Mode
+
+See what's happening in the browser console:
+
+```javascript
+// In js/config.js
+const CONFIG = {
+    DEBUG_MODE: true,  // Enable console logging
+    // ...
+};
+```
+
+## Troubleshooting
+
+### News not loading?
+
+1. Check your internet connection
+2. Open browser console (F12) to see errors
+3. RSS2JSON API might have rate limits - wait a few minutes
+4. Try enabling DEBUG_MODE in config.js to see detailed logs
+
+### Auto-refresh not working?
+
+1. Check CONFIG.AUTO_REFRESH_INTERVAL is > 0
+2. Make sure config.js is loaded before app.js in index.html
+3. Check browser console for errors
+
+### Images not showing?
+
+Some RSS feeds don't include images. This is normal - the layout will adjust automatically.
+
+## License
 
 MIT License
 
-## 贡献
+## Contributing
 
-欢迎提交Issue和Pull Request！
+Issues and Pull Requests are welcome!
+
+## Support
+
+For help or to report issues, please visit:
+- [Report a bug](https://github.com/your-username/your-repo/issues)
+- [Request a feature](https://github.com/your-username/your-repo/issues/new)

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UK News Aggregator - Top Stories from Leading British Media</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/config.js"></script>
 </head>
 <body>
     <header>
@@ -16,12 +17,18 @@
 
     <nav class="filter-nav">
         <div class="container">
-            <button class="filter-btn active" data-source="all">All</button>
-            <button class="filter-btn" data-source="bbc">BBC</button>
-            <button class="filter-btn" data-source="guardian">Guardian</button>
-            <button class="filter-btn" data-source="telegraph">Telegraph</button>
-            <button class="filter-btn" data-source="independent">Independent</button>
-            <button class="filter-btn" data-source="sky">Sky News</button>
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-source="all">All</button>
+                <button class="filter-btn" data-source="bbc">BBC</button>
+                <button class="filter-btn" data-source="guardian">Guardian</button>
+                <button class="filter-btn" data-source="telegraph">Telegraph</button>
+                <button class="filter-btn" data-source="independent">Independent</button>
+                <button class="filter-btn" data-source="sky">Sky News</button>
+            </div>
+            <button id="refresh-btn" class="refresh-btn" title="Refresh news">
+                <span class="refresh-icon">🔄</span>
+                <span class="refresh-text">Refresh</span>
+            </button>
         </div>
     </nav>
 

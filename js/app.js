@@ -67,7 +67,8 @@ async function fetchRSS(sourceKey, source) {
             throw new Error('RSS fetch failed');
         }
 
-        return data.items.slice(0, 10).map(item => ({
+        const maxArticles = CONFIG?.MAX_ARTICLES_PER_SOURCE || 10;
+        return data.items.slice(0, maxArticles).map(item => ({
             source: sourceKey,
             sourceName: source.name,
             sourceClass: source.class,
@@ -89,7 +90,8 @@ function cleanDescription(html) {
     div.innerHTML = html;
     let text = div.textContent || div.innerText || '';
     text = text.replace(/<[^>]*>/g, '');
-    return text.substring(0, 150) + (text.length > 150 ? '...' : '');
+    const maxLength = CONFIG?.DESCRIPTION_LENGTH || 150;
+    return text.substring(0, maxLength) + (text.length > maxLength ? '...' : '');
 }
 
 // Extract image from item
@@ -179,7 +181,8 @@ function getTimeAgo(date) {
         return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
     }
 
-    return date.toLocaleDateString('en-GB');
+    const locale = CONFIG?.DATE_LOCALE || 'en-GB';
+    return date.toLocaleDateString(locale);
 }
 
 // Setup event listeners
@@ -193,6 +196,22 @@ function setupEventListeners() {
             currentFilter = btn.dataset.source;
             displayNews();
         });
+    });
+
+    // Manual refresh button
+    const refreshBtn = document.getElementById('refresh-btn');
+    refreshBtn.addEventListener('click', async () => {
+        refreshBtn.classList.add('refreshing');
+        refreshBtn.disabled = true;
+
+        await fetchAllNews();
+        displayNews();
+        updateLastUpdateTime();
+
+        setTimeout(() => {
+            refreshBtn.classList.remove('refreshing');
+            refreshBtn.disabled = false;
+        }, 1000);
     });
 }
 
@@ -214,7 +233,8 @@ function showLoading(show) {
 function updateLastUpdateTime() {
     const lastUpdate = document.getElementById('last-update');
     const now = new Date();
-    lastUpdate.textContent = now.toLocaleString('en-GB', {
+    const locale = CONFIG?.DATE_LOCALE || 'en-GB';
+    lastUpdate.textContent = now.toLocaleString(locale, {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
@@ -227,9 +247,19 @@ function updateLastUpdateTime() {
 // Initialize after page load
 document.addEventListener('DOMContentLoaded', initApp);
 
-// Auto-refresh every 5 minutes
-setInterval(async () => {
-    await fetchAllNews();
-    displayNews();
-    updateLastUpdateTime();
-}, 5 * 60 * 1000);
+// Auto-refresh based on configuration
+const refreshInterval = CONFIG?.AUTO_REFRESH_INTERVAL || 5;
+if (refreshInterval > 0) {
+    setInterval(async () => {
+        if (CONFIG?.DEBUG_MODE) {
+            console.log('Auto-refreshing news...');
+        }
+        await fetchAllNews();
+        displayNews();
+        updateLastUpdateTime();
+    }, refreshInterval * 60 * 1000);
+
+    if (CONFIG?.DEBUG_MODE) {
+        console.log(`Auto-refresh enabled: every ${refreshInterval} minutes`);
+    }
+}

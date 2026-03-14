@@ -62,9 +62,17 @@ header .subtitle {
 
 .filter-nav .container {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.filter-buttons {
+    display: flex;
     gap: 10px;
     overflow-x: auto;
     padding-bottom: 5px;
+    flex: 1;
 }
 
 .filter-btn {
@@ -88,6 +96,40 @@ header .subtitle {
     background: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+}
+
+.refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.refresh-btn:hover {
+    background: #2d9348;
+    transform: translateY(-1px);
+}
+
+.refresh-btn:active {
+    transform: translateY(0);
+}
+
+.refresh-btn.refreshing .refresh-icon {
+    animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 main {
