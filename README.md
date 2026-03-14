@@ -4,6 +4,10 @@ A clean, modern news aggregation website that provides real-time headlines from 
 
 ## Features
 
+- 👑 **British-Themed Design**
+  - Golden crown favicon with UK flag colors
+  - Professional, recognizable branding
+
 - 📰 **5 Major UK News Sources**
   - BBC News
   - The Guardian
