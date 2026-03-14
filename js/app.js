@@ -1,4 +1,4 @@
-// 新闻源配置
+// News sources configuration
 const NEWS_SOURCES = {
     bbc: {
         name: 'BBC',
@@ -6,17 +6,17 @@ const NEWS_SOURCES = {
         class: 'bbc'
     },
     guardian: {
-        name: '卫报',
+        name: 'The Guardian',
         rss: 'https://www.theguardian.com/uk/rss',
         class: 'guardian'
     },
     telegraph: {
-        name: '电讯报',
+        name: 'The Telegraph',
         rss: 'https://www.telegraph.co.uk/rss.xml',
         class: 'telegraph'
     },
     independent: {
-        name: '独立报',
+        name: 'The Independent',
         rss: 'https://www.independent.co.uk/rss',
         class: 'independent'
     },
@@ -27,13 +27,13 @@ const NEWS_SOURCES = {
     }
 };
 
-// RSS代理服务 - 用于解决CORS问题
+// RSS proxy service - to solve CORS issues
 const RSS_PROXY = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 let allNews = [];
 let currentFilter = 'all';
 
-// 初始化应用
+// Initialize application
 async function initApp() {
     showLoading(true);
     await fetchAllNews();
@@ -43,7 +43,7 @@ async function initApp() {
     showLoading(false);
 }
 
-// 获取所有新闻源
+// Fetch all news sources
 async function fetchAllNews() {
     const promises = Object.entries(NEWS_SOURCES).map(([key, source]) =>
         fetchRSS(key, source)
@@ -57,7 +57,7 @@ async function fetchAllNews() {
         .sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 }
 
-// 获取单个RSS源
+// Fetch single RSS source
 async function fetchRSS(sourceKey, source) {
     try {
         const response = await fetch(`${RSS_PROXY}${encodeURIComponent(source.rss)}`);
@@ -83,7 +83,7 @@ async function fetchRSS(sourceKey, source) {
     }
 }
 
-// 清理描述文本
+// Clean description text
 function cleanDescription(html) {
     const div = document.createElement('div');
     div.innerHTML = html;
@@ -92,9 +92,9 @@ function cleanDescription(html) {
     return text.substring(0, 150) + (text.length > 150 ? '...' : '');
 }
 
-// 提取图片
+// Extract image from item
 function extractImage(item) {
-    // 尝试从不同字段获取图片
+    // Try to get image from different fields
     if (item.enclosure && item.enclosure.link) {
         return item.enclosure.link;
     }
@@ -110,7 +110,7 @@ function extractImage(item) {
     return null;
 }
 
-// 显示新闻
+// Display news
 function displayNews() {
     const newsGrid = document.getElementById('news-grid');
     newsGrid.innerHTML = '';
@@ -120,7 +120,7 @@ function displayNews() {
         : allNews.filter(news => news.source === currentFilter);
 
     if (filteredNews.length === 0) {
-        newsGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: var(--text-secondary);">暂无新闻</p>';
+        newsGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: var(--text-secondary);">No news available</p>';
         return;
     }
 
@@ -130,7 +130,7 @@ function displayNews() {
     });
 }
 
-// 创建新闻卡片
+// Create news card
 function createNewsCard(news) {
     const card = document.createElement('div');
     card.className = `news-card ${currentFilter !== 'all' && news.source !== currentFilter ? 'hidden' : ''}`;
@@ -147,7 +147,7 @@ function createNewsCard(news) {
             <p class="news-description">${news.description}</p>
             <div class="news-meta">
                 <span class="news-time">⏰ ${timeAgo}</span>
-                <a href="${news.link}" target="_blank" rel="noopener noreferrer" class="read-more">阅读全文 →</a>
+                <a href="${news.link}" target="_blank" rel="noopener noreferrer" class="read-more">Read more →</a>
             </div>
         </div>
     `;
@@ -155,34 +155,34 @@ function createNewsCard(news) {
     return card;
 }
 
-// 计算时间差
+// Calculate time ago
 function getTimeAgo(date) {
     const now = new Date();
     const diffInSeconds = Math.floor((now - date) / 1000);
 
     if (diffInSeconds < 60) {
-        return '刚刚';
+        return 'Just now';
     }
 
     const diffInMinutes = Math.floor(diffInSeconds / 60);
     if (diffInMinutes < 60) {
-        return `${diffInMinutes}分钟前`;
+        return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
     }
 
     const diffInHours = Math.floor(diffInMinutes / 60);
     if (diffInHours < 24) {
-        return `${diffInHours}小时前`;
+        return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
     }
 
     const diffInDays = Math.floor(diffInHours / 24);
     if (diffInDays < 7) {
-        return `${diffInDays}天前`;
+        return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
     }
 
-    return date.toLocaleDateString('zh-CN');
+    return date.toLocaleDateString('en-GB');
 }
 
-// 设置事件监听
+// Setup event listeners
 function setupEventListeners() {
     const filterButtons = document.querySelectorAll('.filter-btn');
 
@@ -196,7 +196,7 @@ function setupEventListeners() {
     });
 }
 
-// 显示/隐藏加载状态
+// Show/hide loading state
 function showLoading(show) {
     const loading = document.getElementById('loading');
     const newsGrid = document.getElementById('news-grid');
@@ -210,23 +210,24 @@ function showLoading(show) {
     }
 }
 
-// 更新最后更新时间
+// Update last update time
 function updateLastUpdateTime() {
     const lastUpdate = document.getElementById('last-update');
     const now = new Date();
-    lastUpdate.textContent = now.toLocaleString('zh-CN', {
+    lastUpdate.textContent = now.toLocaleString('en-GB', {
         year: 'numeric',
         month: '2-digit',
         day: '2-digit',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
+        hour12: false
     });
 }
 
-// 页面加载完成后初始化
+// Initialize after page load
 document.addEventListener('DOMContentLoaded', initApp);
 
-// 每5分钟自动刷新一次
+// Auto-refresh every 5 minutes
 setInterval(async () => {
     await fetchAllNews();
     displayNews();
